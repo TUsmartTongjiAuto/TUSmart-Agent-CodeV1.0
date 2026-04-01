@@ -1,8 +1,12 @@
 # TUSmart-Agent-Code
 代码规模：1,987 个文件，512,000+ 行 TypeScript 代码
+
 运行时：Bun（现代 JavaScript 运行时）
+
 UI 框架：React + Ink（终端 React 渲染器）
+
 架构模式：模块化、插件化、多代理协作
+
 ## 整体架构
 <img width="1080" height="708" alt="image" src="https://github.com/user-attachments/assets/04dd3166-411c-4d06-9b85-6023fcf1cb30" />
 
@@ -10,27 +14,44 @@ UI 框架：React + Ink（终端 React 渲染器）
 
 宠物经济学的奥妙：
 确定性生成：每人只会得到一只固定的洛克，基于账号 UUID + 固定盐值 friend-2026-401 确定性生成
+
 物种多样性：18 种物种，包括鸭子、鹅、果冻、猫、龙、章鱼、猫头鹰、企鹅、乌龟、蜗牛、幽灵、六角恐龙、水豚、仙人掌、机器人、兔子、蘑菇、胖猫
+
 稀有度系统：
+
 common：60%，★
+
 uncommon：25%，★★
+
 rare：10%，★★★
+
 epic：4%，★★★★
+
 legendary：1%，★★★★★
+
 属性系统：5 项属性——DEBUGGING、PATIENCE、CHAOS、WISDOM、SNARK
+
 闪光概率：1% 概率获得特殊颜色的宠物
+
 交互命令：/buddy hatch 孵化、/buddy pet 抚摸、/buddy card 查看卡片
+
 ![b3f503027d04e6d18de9468003591002](https://github.com/user-attachments/assets/1fdc225f-5266-48e5-9a1c-7c63e0ae2afb)
 
 
 
 ## 核心架构设计
 入口层：main.tsx 负责启动，setup.ts 
+
 初始化环境展示层：React + Ink 构建的终端 UI，提供现代化用户体验
+
 核心引擎：QueryEngine（46K 行代码）处理所有 LLM 对话逻辑
+
 执行层：Tool System 和 Command System 负责实际操作执行
+
 协作层：多 Agent 系统和远程桥接实现复杂协作
+
 管理层：权限、配置、状态管理确保系统稳定可靠
+
 ## 启动流程架构
 <img width="1080" height="1048" alt="image" src="https://github.com/user-attachments/assets/38fb0a0e-d21d-4381-b1dd-3b72f88b9826" />
 ## 性能优化亮点
@@ -43,6 +64,7 @@ const tasks = Promise.all([
   startKeychainPrefetch()   // OAuth/API 钥匙串预取
 ])
 """
+
 ## 工具系统架构
 <img width="1080" height="642" alt="image" src="https://github.com/user-attachments/assets/a72a1b85-87f5-4959-9250-4e66d3678b02" />
 
@@ -75,13 +97,19 @@ const tasks = Promise.all([
 
 ## QueryEngine 架构
 AI 对话的引擎：46K 行代码的 QueryEngine 是整个系统的大脑，处理所有 LLM 交互：
+
 <img width="1080" height="782" alt="image" src="https://github.com/user-attachments/assets/cb9c946b-53b6-45fa-aca0-526e2941b451" />
 
 上下文管理：收集 git 状态、CLAUDE.md、环境信息
+
 LLM 交互：处理 API 调用、流式响应
+
 工具调度：执行工具调用、结果解析
+
 权限检查：工具调用前的权限验证
+
 重试逻辑：API 失败时的重试机制
+
 费用追踪：Token 计数、成本计算
 
 ## 权限系统架构
